@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 
 Route::get(
     '/home',
@@ -32,5 +33,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get(
+    '/admin',
+    [AdminHomeController::class, 'index']
+);
 
 });
