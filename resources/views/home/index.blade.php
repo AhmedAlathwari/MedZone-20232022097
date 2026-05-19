@@ -1,25 +1,19 @@
 @extends('frontbase')
 
-@section('title', 'MedZone Home')
+@section('title','MedZone Home')
 
-@section('sidebar')
+@section('slider')
 
-    @parent
-
-    <br>
-
-    Pharmacy Menu Link
+@include('home.slider')
 
 @endsection
 
 @section('content')
 
-    <h1>Welcome To MedZone</h1>
+<h1>Welcome To MedZone</h1>
 
-    <p>
+<p>Online Pharmacy Store</p>
 
-        Online Pharmacy Store
-
-    </p>
+<h2>Featured Products</h2>
 
 @endsection
