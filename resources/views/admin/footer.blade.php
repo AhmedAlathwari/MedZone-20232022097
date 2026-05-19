@@ -1,5 +1,11 @@
-<hr>
+<footer class="main-footer">
 
-<footer>
-    <p>MedZone Admin Footer</p>
+    <strong>
+        MedZone Admin Panel
+    </strong>
+
+    <div class="float-right d-none d-sm-inline-block">
+        Pharmacy Store Management
+    </div>
+
 </footer>
