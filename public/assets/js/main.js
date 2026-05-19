@@ -1,0 +1,1 @@
+console.log("MedZone Loaded");

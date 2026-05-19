@@ -8,6 +8,11 @@
 @yield('title')
 </title>
 
+<link rel="stylesheet"
+href="{{ asset('assets/css/style.css') }}">
+
+@yield('head')
+
 </head>
 
 <body>
@@ -21,6 +26,8 @@
 @yield('content')
 
 @include('home.footer')
+
+<script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
 
