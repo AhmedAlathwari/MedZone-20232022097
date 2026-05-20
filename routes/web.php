@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::get(
     '/home',
@@ -30,20 +31,41 @@ Route::get(
     [AdminHomeController::class, 'index']
 );
 
-Route::get(
-    '/admin/category',
-    [AdminCategoryController::class, 'index']
-);
+Route::prefix('admin')
+->name('admin.')
+->group(function () {
 
-Route::get(
-    '/admin/category/create',
-    [AdminCategoryController::class, 'create']
-);
+    Route::prefix('category')
+    ->name('category.')
+    ->controller(AdminCategoryController::class)
+    ->group(function () {
 
-Route::post(
-    '/admin/category/store',
-    [AdminCategoryController::class, 'store']
-);
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::get('/destroy/{id}', 'destroy')->name('destroy');
+
+    });
+
+    Route::prefix('product')
+    ->name('product.')
+    ->controller(AdminProductController::class)
+    ->group(function () {
+
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::get('/destroy/{id}', 'destroy')->name('destroy');
+
+    });
+
+});
 
 Route::middleware([
     'auth:sanctum',

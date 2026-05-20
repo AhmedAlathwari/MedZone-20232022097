@@ -7,30 +7,42 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
   
-    public function up(): void
+   public function up(): void
 {
     Schema::create('products', function (Blueprint $table) {
+
         $table->id();
 
-        $table->foreignId('category_id');
+        $table->integer('category_id');
+
+        $table->integer('user_id')->nullable();
 
         $table->string('title');
+
         $table->string('keywords')->nullable();
-        $table->text('description')->nullable();
+
+        $table->string('description')->nullable();
 
         $table->string('image')->nullable();
 
-        $table->double('price');
+        $table->float('price')->default(0);
 
-        $table->integer('quantity');
+        $table->integer('quantity')->default(0);
 
-        $table->longText('detail')->nullable();
+        $table->integer('min_quantity')->default(5);
 
-        $table->boolean('status')->default(true);
+        $table->integer('tax')->default(0);
+
+        $table->text('detail')->nullable();
+
+        $table->string('status', 6)
+              ->default('False');
 
         $table->timestamps();
+
     });
 }
+
     
     public function down(): void
     {

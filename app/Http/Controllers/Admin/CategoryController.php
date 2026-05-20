@@ -44,22 +44,46 @@ class CategoryController extends Controller
     return redirect('/admin/category');
 }
     
-    public function show(string $id)
-    {
-        //
-    }
+    public function show($id)
+{
+    $data = Category::find($id);
+
+    return view(
+        'admin.category.show',
+        [
+            'data' => $data
+        ]
+    );
+}
 
     
-    public function edit(string $id)
-    {
-        //
-    }
+    public function edit($id)
+{
+    $data = Category::find($id);
 
+    return view('admin.category.edit', [
+        'data' => $data
+    ]);
+}
     
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $data = Category::find($id);
+
+    $data->parent_id = 0;
+
+    $data->title = $request->input('title');
+
+    $data->keywords = $request->input('keywords');
+
+    $data->description = $request->input('description');
+
+    $data->status = $request->input('status');
+
+    $data->save();
+
+    return redirect('/admin/category');
+}
 
     
     public function destroy(string $id)

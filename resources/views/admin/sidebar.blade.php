@@ -22,13 +22,9 @@ role="menu">
 
 <a href="/admin" class="nav-link">
 
-<i class="nav-icon fas fa-tachometer-alt"></i>
+<i class="nav-icon fas fa-home"></i>
 
-<p>
-
-Dashboard
-
-</p>
+<p>Dashboard</p>
 
 </a>
 
@@ -36,15 +32,11 @@ Dashboard
 
 <li class="nav-item">
 
-<a href="#" class="nav-link">
+<a href="/admin/category" class="nav-link">
 
-<i class="nav-icon fas fa-pills"></i>
+<i class="nav-icon fas fa-folder-open text-blue"></i>
 
-<p>
-
-Medicine Categories
-
-</p>
+<p>Categories</p>
 
 </a>
 
@@ -56,11 +48,7 @@ Medicine Categories
 
 <i class="nav-icon fas fa-capsules"></i>
 
-<p>
-
-Products
-
-</p>
+<p>Products</p>
 
 </a>
 
@@ -70,13 +58,57 @@ Products
 
 <a href="#" class="nav-link">
 
-<i class="nav-icon fas fa-shopping-cart"></i>
+<i class="nav-icon fas fa-comments"></i>
 
-<p>
+<p>Comments</p>
 
-Orders
+</a>
 
-</p>
+</li>
+
+<li class="nav-item">
+
+<a href="#" class="nav-link">
+
+<i class="nav-icon fas fa-circle-question"></i>
+
+<p>FAQ</p>
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a href="#" class="nav-link">
+
+<i class="nav-icon fas fa-envelope"></i>
+
+<p>Messages</p>
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a href="#" class="nav-link">
+
+<i class="nav-icon fas fa-users"></i>
+
+<p>Users</p>
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a href="/admin/setting" class="nav-link">
+
+<i class="nav-icon fas fa-gears"></i>
+
+<p>Settings</p>
 
 </a>
 
