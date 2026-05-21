@@ -43,4 +43,18 @@ class ProductController extends Controller
 
         return redirect()->route('admin.product.index');
     }
+    public function edit($id)
+{
+    $data = Product::find($id);
+
+    $categories = Category::all();
+
+    return view(
+        'admin.product.edit',
+        [
+            'data' => $data,
+            'categories' => $categories
+        ]
+    );
+}
 }

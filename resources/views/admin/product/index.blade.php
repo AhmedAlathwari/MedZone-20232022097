@@ -29,6 +29,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Status</th>
+                    <th>Images</th>
                     <th>Show</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -44,10 +45,32 @@
 
                     <td>{{ $rs->id }}</td>
                     <td>{{ $rs->title }}</td>
-                    <td>{{ $rs->category_id }}</td>
+
+                    <td>
+                        @php
+                            $category = \App\Models\Category::find($rs->category_id);
+                        @endphp
+
+                        @if($category)
+
+                            {{ \App\Http\Controllers\Admin\CategoryController::getParentsTree($category, $category->title) }}
+
+                        @else
+
+                            No Category
+
+                        @endif
+                    </td>
+
                     <td>{{ $rs->price }}</td>
                     <td>{{ $rs->quantity }}</td>
                     <td>{{ $rs->status }}</td>
+
+                    <td>
+                        <a href="{{ route('admin.image.index', ['product_id' => $rs->id]) }}">
+                            <i class="fas fa-images text-purple fa-lg" title="Product Image Gallery"></i>
+                        </a>
+                    </td>
 
                     <td>
                         <a href="/admin/product/show/{{ $rs->id }}"

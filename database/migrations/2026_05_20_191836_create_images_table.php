@@ -13,11 +13,11 @@ return new class extends Migration
 
         $table->id();
 
-        $table->foreignId('product_id');
-
-        $table->string('image');
+        $table->integer('product_id');
 
         $table->string('title')->nullable();
+
+        $table->string('image');
 
         $table->timestamps();
 
