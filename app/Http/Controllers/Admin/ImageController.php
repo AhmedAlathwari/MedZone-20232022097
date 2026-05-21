@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Image;
 use App\Models\Product;
-
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
@@ -25,11 +23,8 @@ class ImageController extends Controller
         return view(
             'admin.image.index',
             [
-
                 'product' => $product,
-
                 'images' => $images
-
             ]
         );
     }
@@ -58,7 +53,8 @@ class ImageController extends Controller
             $request->file(
                 'image'
             )->store(
-                'images'
+                'images',
+                'public'
             );
         }
 
@@ -85,7 +81,9 @@ class ImageController extends Controller
 
         if($data->image)
         {
-            Storage::delete(
+            Storage::disk(
+                'public'
+            )->delete(
                 $data->image
             );
         }

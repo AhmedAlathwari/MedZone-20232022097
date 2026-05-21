@@ -63,35 +63,21 @@ Upload Image
 @foreach($images as $rs)
 
 <tr>
+    <td>{{ $rs->id }}</td>
+    <td>{{ $rs->title }}</td>
 
-<td>{{ $rs->id }}</td>
+    <td>
+        <img
+           src="{{ asset('storage/'.$rs->image) }}"
+            style="height:80px;width:80px;">
+    </td>
 
-<td>{{ $rs->title }}</td>
-
-<td>
-
-<img src="/storage/{{ $rs->image }}"
-style="height:100px;width:100px;">
-
-</td>
-
-<td>
-
-<a href="{{ route(
-'admin.image.destroy',
-[
-'product_id'=>$product->id,
-'id'=>$rs->id
-]) }}"
-
-class="btn btn-danger">
-
-Delete
-
-</a>
-
-</td>
-
+    <td>
+        <a href="{{ route('admin.image.destroy', ['product_id'=>$product->id, 'id'=>$rs->id]) }}"
+           class="btn btn-danger">
+            Delete
+        </a>
+    </td>
 </tr>
 
 @endforeach
