@@ -49,6 +49,8 @@ href="{{ asset('assets/admin/dist/css/adminlte.min.css') }}">
 
 <script src="{{ asset('assets/admin/dist/js/adminlte.min.js') }}"></script>
 
+@yield('footer')
+
 </body>
 
 </html>
