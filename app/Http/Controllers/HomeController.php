@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
    public function index()
 {
-    return view('home.index');
+    $sliderdata = Product::limit(5)->get();
+
+    $productlist1 = Product::limit(6)->get();
+
+    return view(
+        'home.index',
+        [
+            'sliderdata' => $sliderdata,
+
+            'productlist1' => $productlist1
+        ]
+    );
 }
 
     public function calculation($id, $number)
