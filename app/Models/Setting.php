@@ -10,8 +10,8 @@ class Setting extends Model
 
         'title',
         'keywords',
-        'description',
-
+        'description',  
+        'icon',
         'company',
         'address',
         'phone',

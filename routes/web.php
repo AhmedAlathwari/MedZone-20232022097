@@ -30,6 +30,21 @@ Route::get(
 )->name('product');
 
 Route::get(
+    '/about',
+    [HomeController::class, 'about']
+)->name('about');
+
+Route::get(
+    '/references',
+    [HomeController::class, 'references']
+)->name('references');
+
+Route::get(
+    '/contact',
+    [HomeController::class, 'contact']
+)->name('contact');
+
+Route::get(
     '/categoryproducts/{id}/{slug}',
     [
         HomeController::class,
@@ -60,7 +75,25 @@ Route::prefix('admin')
 ->name('admin.')
 ->group(function () {
 
+Route::get(
+    '/setting',
+    [
+        AdminHomeController::class,
+        'settings'
+    ]
+)->name(
+    'setting'
+);
 
+Route::post(
+    '/setting/update',
+    [
+        AdminHomeController::class,
+        'settingUpdate'
+    ]
+)->name(
+    'setting.update'
+);
 
     Route::prefix('category')
     ->name('category.')
