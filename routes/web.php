@@ -25,6 +25,21 @@ Route::get(
 );
 
 Route::get(
+    '/product/{id}',
+    [HomeController::class, 'product']
+)->name('product');
+
+Route::get(
+    '/categoryproducts/{id}/{slug}',
+    [
+        HomeController::class,
+        'categoryproducts'
+    ]
+)->name(
+    'categoryproducts'
+);
+
+Route::get(
     '/form',
     [HomeController::class, 'form']
 );

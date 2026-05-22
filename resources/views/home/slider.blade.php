@@ -63,12 +63,12 @@
             </h2>
 
             <a
-                href="/product/{{ $rs->id }}"
-                class="btn btn-primary">
+    href="{{ route('product',['id'=>$rs->id]) }}"
+    class="btn btn-primary">
 
-                Shop Now
+    Shop Now
 
-            </a>
+</a>
 
         </div>
 
