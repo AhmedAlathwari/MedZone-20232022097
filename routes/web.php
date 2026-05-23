@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
-
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 
 
 Route::get(
@@ -43,6 +43,16 @@ Route::get(
     '/contact',
     [HomeController::class, 'contact']
 )->name('contact');
+
+Route::post(
+    '/storemessage',
+    [
+        HomeController::class,
+        'storemessage'
+    ]
+)->name(
+    'storemessage'
+);
 
 Route::get(
     '/categoryproducts/{id}/{slug}',
@@ -210,6 +220,39 @@ Route::post(
         )->name('destroy');
 
     });
+
+Route::prefix('message')
+->name('message.')
+->controller(
+    AdminMessageController::class
+)
+->group(function () {
+
+    Route::get(
+        '/',
+        'index'
+    )->name('index');
+
+    Route::get(
+        '/show/{id}',
+        'show'
+    )->name('show');
+
+    Route::post(
+        '/update/{id}',
+        'update'
+    )->name('update');
+
+    Route::get(
+        '/destroy/{id}',
+        'destroy'
+    )->name('destroy');
+
+});
+
+
+
+   
 
 });
 

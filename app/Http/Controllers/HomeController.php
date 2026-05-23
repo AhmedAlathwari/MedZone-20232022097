@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Image;
 use App\Models\Category;
 use App\Models\Setting;
+use App\Models\Message;
+
 class HomeController extends Controller
 {
     public function index()
@@ -72,47 +74,86 @@ class HomeController extends Controller
         )
         ->get();
     }
-public function about()
-{
-    $setting = Setting::first();
 
-    return view(
-        'home.about',
-        [
-            'setting' => $setting
-        ]
-    );
-}
+    public function about()
+    {
+        $setting = Setting::first();
 
-public function references()
-{
-    $setting = Setting::first();
+        return view(
+            'home.about',
+            [
+                'setting' => $setting
+            ]
+        );
+    }
 
-    return view(
-        'home.references',
-        [
-            'setting' => $setting
-        ]
-    );
-}
+    public function references()
+    {
+        $setting = Setting::first();
 
-public function contact()
-{
-    $setting = Setting::first();
+        return view(
+            'home.references',
+            [
+                'setting' => $setting
+            ]
+        );
+    }
 
-    return view(
-        'home.contact',
-        [
-            'setting' => $setting
-        ]
-    );
-}
+    public function contact()
+    {
+        $setting = Setting::first();
 
+        return view(
+            'home.contact',
+            [
+                'setting' => $setting
+            ]
+        );
+    }
 
+    public function storemessage(Request $request)
+    {
+        $data = new Message();
 
+        $data->name =
+        $request->input(
+            'name'
+        );
 
+        $data->email =
+        $request->input(
+            'email'
+        );
 
+        $data->phone =
+        $request->input(
+            'phone'
+        );
 
+        $data->subject =
+        $request->input(
+            'subject'
+        );
+
+        $data->message =
+        $request->input(
+            'message'
+        );
+
+        $data->ip =
+        $request->ip();
+
+        $data->save();
+
+        return redirect()
+        ->route(
+            'contact'
+        )
+        ->with(
+            'success',
+            'Your message has been sent successfully!'
+        );
+    }
 
     public function calculation($id, $number)
     {

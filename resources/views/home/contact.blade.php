@@ -42,11 +42,38 @@ Send Message
 
 </h3>
 
-<form>
+@if(session('success'))
+
+<div
+style="
+background:#d4edda;
+color:#155724;
+padding:12px;
+margin-bottom:15px;
+border-radius:5px;
+">
+
+<strong>
+
+{{ session('success') }}
+
+</strong>
+
+</div>
+
+@endif
+
+<form
+action="{{ route('storemessage') }}"
+method="POST">
+
+@csrf
 
 <input
 type="text"
+name="name"
 placeholder="Your Name"
+required
 style="
 width:100%;
 padding:10px;
@@ -55,7 +82,9 @@ margin-bottom:15px;
 
 <input
 type="email"
+name="email"
 placeholder="Your Email"
+required
 style="
 width:100%;
 padding:10px;
@@ -64,6 +93,17 @@ margin-bottom:15px;
 
 <input
 type="text"
+name="phone"
+placeholder="Your Phone"
+style="
+width:100%;
+padding:10px;
+margin-bottom:15px;
+">
+
+<input
+type="text"
+name="subject"
 placeholder="Subject"
 style="
 width:100%;
@@ -72,15 +112,18 @@ margin-bottom:15px;
 ">
 
 <textarea
+name="message"
 rows="6"
 placeholder="Message"
+required
 style="
 width:100%;
 padding:10px;
 margin-bottom:15px;
 "></textarea>
 
-<button>
+<button
+type="submit">
 
 Send Message
 
