@@ -18,9 +18,9 @@
 
     <div class="card-body p-0">
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
 
-            <thead>
+            <thead class="thead-dark">
 
                 <tr>
                     <th>ID</th>
@@ -29,6 +29,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Status</th>
+                    <th>Image</th>
                     <th>Images</th>
                     <th>Show</th>
                     <th>Edit</th>
@@ -64,11 +65,54 @@
 
                     <td>{{ $rs->price }}</td>
                     <td>{{ $rs->quantity }}</td>
-                    <td>{{ $rs->status }}</td>
 
                     <td>
-                        <a href="{{ route('admin.image.index', ['product_id' => $rs->id]) }}">
-                            <i class="fas fa-images text-purple fa-lg" title="Product Image Gallery"></i>
+
+                        @if($rs->status == 'True')
+
+                        <span class="badge badge-success">
+                            True
+                        </span>
+
+                        @else
+
+                        <span class="badge badge-secondary">
+                            False
+                        </span>
+
+                        @endif
+
+                    </td>
+
+                    <td>
+
+                        @if($rs->image)
+
+                        <img
+                        src="{{ Storage::url($rs->image) }}"
+                        style="
+                        width:70px;
+                        height:70px;
+                        object-fit:cover;
+                        border-radius:10px;
+                        border:1px solid #ddd;
+                        padding:2px;
+                        ">
+
+                        @else
+
+                        <span class="badge badge-warning">
+                            No Image
+                        </span>
+
+                        @endif
+
+                    </td>
+
+                    <td>
+                        <a href="{{ route('admin.image.index', ['product_id' => $rs->id]) }}"
+                           class="btn btn-warning btn-sm">
+                            Gallery
                         </a>
                     </td>
 

@@ -6,34 +6,57 @@
 
 <div class="card">
 
-<div class="card-header">
+<div class="card-header bg-primary text-white">
 
 <h3>
-Product : {{ $product->title }}
+Product Gallery : {{ $product->title }}
 </h3>
 
 </div>
 
 <div class="card-body">
 
-<form action="{{ route('admin.image.store',['product_id'=>$product->id]) }}"
+<div class="card mb-4">
+
+<div class="card-header">
+
+<h4>
+Upload New Image
+</h4>
+
+</div>
+
+<div class="card-body">
+
+<form
+action="{{ route('admin.image.store',['product_id'=>$product->id]) }}"
 method="POST"
 enctype="multipart/form-data">
 
 @csrf
 
-<input type="text"
+<div class="form-group">
+
+<label>Image Title</label>
+
+<input
+type="text"
 name="title"
 class="form-control"
 placeholder="Image Title">
 
-<br>
+</div>
 
-<input type="file"
+<div class="form-group">
+
+<label>Image File</label>
+
+<input
+type="file"
 name="image"
 class="form-control">
 
-<br>
+</div>
 
 <button class="btn btn-success">
 Upload Image
@@ -41,11 +64,13 @@ Upload Image
 
 </form>
 
-<br><br>
+</div>
 
-<table class="table table-bordered">
+</div>
 
-<thead>
+<table class="table table-bordered table-hover">
+
+<thead class="thead-dark">
 
 <tr>
 
@@ -63,21 +88,38 @@ Upload Image
 @foreach($images as $rs)
 
 <tr>
-    <td>{{ $rs->id }}</td>
-    <td>{{ $rs->title }}</td>
 
-    <td>
-        <img
-           src="{{ asset('storage/'.$rs->image) }}"
-            style="height:80px;width:80px;">
-    </td>
+<td>{{ $rs->id }}</td>
 
-    <td>
-        <a href="{{ route('admin.image.destroy', ['product_id'=>$product->id, 'id'=>$rs->id]) }}"
-           class="btn btn-danger">
-            Delete
-        </a>
-    </td>
+<td>{{ $rs->title }}</td>
+
+<td>
+
+<img
+src="{{ asset('storage/'.$rs->image) }}"
+style="
+width:100px;
+height:100px;
+object-fit:cover;
+border-radius:12px;
+border:1px solid #ddd;
+padding:3px;
+">
+
+</td>
+
+<td>
+
+<a
+href="{{ route('admin.image.destroy', ['product_id'=>$product->id, 'id'=>$rs->id]) }}"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+</td>
+
 </tr>
 
 @endforeach

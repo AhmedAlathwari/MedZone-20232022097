@@ -8,7 +8,7 @@ use App\Models\Image;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Message;
-
+use App\Models\Ffaq;
 class HomeController extends Controller
 {
     public function index()
@@ -193,4 +193,24 @@ class HomeController extends Controller
             .
             $lastName;
     }
+public function faq()
+{
+    $setting = Setting::first();
+
+    $faq = Ffaq::where(
+        'status',
+        'True'
+    )->get();
+
+    return view(
+        'home.faq',
+        [
+            'setting' => $setting,
+
+            'faq' => $faq
+        ]
+    );
+}
+
+
 }

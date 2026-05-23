@@ -6,7 +6,7 @@
 
 <div class="card">
 
-<div class="card-header">
+<div class="card-header bg-primary text-white">
 
 <h3>
 
@@ -18,7 +18,9 @@ Messages List
 
 <div class="card-body">
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
+
+<thead class="thead-dark">
 
 <tr>
 
@@ -37,6 +39,10 @@ Messages List
 <th>Delete</th>
 
 </tr>
+
+</thead>
+
+<tbody>
 
 @foreach($data as $rs)
 
@@ -68,7 +74,23 @@ Messages List
 
 <td>
 
-{{ $rs->status }}
+@if($rs->status == 'New')
+
+<span class="badge badge-success">
+
+New
+
+</span>
+
+@else
+
+<span class="badge badge-secondary">
+
+Read
+
+</span>
+
+@endif
 
 </td>
 
@@ -76,7 +98,7 @@ Messages List
 
 <a
 href="{{ route('admin.message.show',$rs->id) }}"
-class="btn btn-info">
+class="btn btn-info btn-sm">
 
 Show
 
@@ -88,7 +110,7 @@ Show
 
 <a
 href="{{ route('admin.message.destroy',$rs->id) }}"
-class="btn btn-danger">
+class="btn btn-danger btn-sm">
 
 Delete
 
@@ -99,6 +121,8 @@ Delete
 </tr>
 
 @endforeach
+
+</tbody>
 
 </table>
 

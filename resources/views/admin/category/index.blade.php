@@ -6,19 +6,21 @@
 
 <div class="card">
 
-    <div class="card-header">
+    <div class="card-header bg-primary text-white">
+
         <h3 class="card-title">Category List</h3>
+
     </div>
 
     <div class="card-body p-0">
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
 
-            <thead>
+            <thead class="thead-dark">
 
                 <tr>
 
-                    <th style="width:10px">ID</th>
+                    <th>ID</th>
 
                     <th>Title</th>
 
@@ -30,11 +32,11 @@
 
                     <th>Status</th>
 
-                    <th style="width:40px">Show</th>
+                    <th>Show</th>
 
-                    <th style="width:40px">Edit</th>
+                    <th>Edit</th>
 
-                    <th style="width:40px">Delete</th>
+                    <th>Delete</th>
 
                 </tr>
 
@@ -50,44 +52,82 @@
 
                     <td>
 
-{{ \App\Http\Controllers\Admin\CategoryController::getParentsTree($rs,$rs->title) }}
+                        {{ \App\Http\Controllers\Admin\CategoryController::getParentsTree($rs,$rs->title) }}
 
-</td>
+                    </td>
 
                     <td>{{ $rs->keywords }}</td>
 
                     <td>{{ $rs->description }}</td>
 
                     <td>
-    @if ($rs->image)
 
-        <img src="{{ asset('storage/'.$rs->image) }}"
-             style="height:40px; border-radius:2px;">
+                        @if ($rs->image)
 
-    @endif
-</td>
+                        <img
+                        src="{{ asset('storage/'.$rs->image) }}"
+                        style="
+                        width:70px;
+                        height:70px;
+                        object-fit:cover;
+                        border-radius:10px;
+                        border:1px solid #ddd;
+                        padding:2px;
+                        ">
 
-                    <td>{{ $rs->status }}</td>
+                        @else
+
+                        <span class="badge badge-warning">
+                            No Image
+                        </span>
+
+                        @endif
+
+                    </td>
 
                     <td>
+
+                        @if($rs->status == 'True')
+
+                        <span class="badge badge-success">
+                            True
+                        </span>
+
+                        @else
+
+                        <span class="badge badge-secondary">
+                            False
+                        </span>
+
+                        @endif
+
+                    </td>
+
+                    <td>
+
                         <a href="/admin/category/show/{{ $rs->id }}"
-                        class="btn btn-block btn-info btn-sm">
+                        class="btn btn-info btn-sm">
                         Show
                         </a>
+
                     </td>
 
                     <td>
+
                         <a href="/admin/category/edit/{{ $rs->id }}"
-                        class="btn btn-block btn-success btn-sm">
+                        class="btn btn-success btn-sm">
                         Edit
                         </a>
+
                     </td>
 
                     <td>
+
                         <a href="/admin/category/destroy/{{ $rs->id }}"
-                        class="btn btn-block btn-danger btn-sm">
+                        class="btn btn-danger btn-sm">
                         Delete
                         </a>
+
                     </td>
 
                 </tr>

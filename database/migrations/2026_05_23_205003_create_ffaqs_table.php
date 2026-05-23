@@ -9,24 +9,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create(
-            'product_images',
+            'ffaqs',
             function (
                 Blueprint $table
             ) {
 
             $table->id();
 
-            $table->integer(
-                'product_id'
+            $table->string(
+                'question'
+            );
+
+            $table->text(
+                'answer'
             );
 
             $table->string(
-                'title'
-            )->nullable();
-
-            $table->string(
-                'image'
-            )->nullable();
+                'status',
+                6
+            )->default(
+                'False'
+            );
 
             $table->timestamps();
 
@@ -37,7 +40,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists(
-            'product_images'
+            'ffaqs'
         );
     }
 };

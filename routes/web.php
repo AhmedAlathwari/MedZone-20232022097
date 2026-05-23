@@ -12,13 +12,16 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
-
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 
 Route::get(
     '/home',
     [HomeController::class, 'index']
 );
-
+Route::get(
+'/faq',
+[HomeController::class,'faq']
+)->name('faq');
 Route::get(
     '/test/{id}/{number}',
     [HomeController::class, 'calculation']
@@ -250,7 +253,49 @@ Route::prefix('message')
 
 });
 
+Route::prefix('faq')
+->name('faq.')
+->controller(
+AdminFaqController::class
+)
+->group(function () {
 
+Route::get(
+'/',
+'index'
+)->name('index');
+
+Route::get(
+'/create',
+'create'
+)->name('create');
+
+Route::post(
+'/store',
+'store'
+)->name('store');
+
+Route::get(
+'/show/{id}',
+'show'
+)->name('show');
+
+Route::get(
+'/edit/{id}',
+'edit'
+)->name('edit');
+
+Route::post(
+'/update/{id}',
+'update'
+)->name('update');
+
+Route::get(
+'/destroy/{id}',
+'destroy'
+)->name('destroy');
+
+});
 
    
 
