@@ -5,13 +5,26 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
-       
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index()
+{
+    if(
+        Auth::user()->roles
+        !=
+        'admin'
+    )
     {
-        return view('admin.index');
+        return redirect(
+            '/home'
+        );
     }
+
+    return view(
+        'admin.index'
+    );
+}
 
     public function settings()
     {

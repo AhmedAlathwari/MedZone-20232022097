@@ -250,15 +250,25 @@ public function logincheck(Request $request)
         )
     )
     {
+        if(
+            Auth::user()->roles
+            ==
+            'admin'
+        )
+        {
+            return redirect(
+                '/admin'
+            );
+        }
+
         return redirect(
-            '/admin'
+            '/home'
         );
     }
 
     return redirect()
     ->back();
 }
-
 
 
 

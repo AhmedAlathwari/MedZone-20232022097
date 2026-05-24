@@ -28,16 +28,27 @@ Dashboard
 
 <li class="nav-item">
 
-<a class="nav-link" href="#">
+<a class="nav-link">
 
 <i class="fas fa-user"></i>
 
-Admin
+{{ Auth::user()->name }}
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a
+class="nav-link"
+href="/logoutuser">
+
+Logout
 
 </a>
 
 </li>
 
 </ul>
-
 </nav>
