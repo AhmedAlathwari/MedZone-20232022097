@@ -12,21 +12,28 @@
 
 <h2>MedZone Admin Login</h2>
 
-<form>
+<form
+action="{{ route('adminlogincheck') }}"
+method="POST">
+
+@csrf
 
 <input
 type="email"
+name="email"
 placeholder="Email">
 
 <br><br>
 
 <input
 type="password"
+name="password"
 placeholder="Password">
 
 <br><br>
 
-<button>
+<button
+type="submit">
 
 Login
 

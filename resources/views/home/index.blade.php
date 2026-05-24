@@ -74,6 +74,24 @@ No Image
 {{ $rs->title }}
 
 </h3>
+@php
+    $average = $rs->comments->avg('rate');
+@endphp
+
+<div>
+    Reviews: {{ $rs->comments->count() }}
+    |
+    Average Rate: {{ number_format($average, 1) }}
+</div>
+
+<div>
+@if($average >= 1) ★ @else ☆ @endif
+@if($average >= 2) ★ @else ☆ @endif
+@if($average >= 3) ★ @else ☆ @endif
+@if($average >= 4) ★ @else ☆ @endif
+@if($average >= 5) ★ @else ☆ @endif
+</div>
+
 
 <div>
 

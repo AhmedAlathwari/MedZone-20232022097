@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Message;
 use App\Models\Ffaq;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index()
@@ -32,13 +34,24 @@ class HomeController extends Controller
         $data = Product::find($id);
 
         $images = Image::where('product_id', $id)->get();
+        $comments = Comment::where(
+    'product_id',
+    $id
+)
+->where(
+    'status',
+    'true'
+)
+->get();
 
         return view(
             'home.product',
             [
                 'data' => $data,
 
-                'images' => $images
+                'images' => $images,
+                'comments' => $comments
+
             ]
         );
     }
@@ -211,6 +224,42 @@ public function faq()
         ]
     );
 }
+
+public function logoutuser()
+{
+    Auth::logout();
+
+    return redirect('/home');
+}
+public function logincheck(Request $request)
+{
+    $credentials =
+    $request->validate(
+        [
+            'email' =>
+            'required|email',
+
+            'password' =>
+            'required'
+        ]
+    );
+
+    if(
+        Auth::attempt(
+            $credentials
+        )
+    )
+    {
+        return redirect(
+            '/admin'
+        );
+    }
+
+    return redirect()
+    ->back();
+}
+
+
 
 
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\CommentController;
 
 Route::get(
     '/home',
@@ -47,6 +48,39 @@ Route::get(
     [HomeController::class, 'contact']
 )->name('contact');
 
+Route::get(
+    '/logoutuser',
+    [
+        HomeController::class,
+        'logoutuser'
+    ]
+)->name(
+    'logoutuser'
+);
+
+Route::get(
+    '/admin/login',
+    function ()
+    {
+        return view(
+            'admin.login.login'
+        );
+    }
+)->name(
+    'adminlogin'
+);
+
+Route::post(
+    '/admin/logincheck',
+    [
+        HomeController::class,
+        'logincheck'
+    ]
+)->name(
+    'adminlogincheck'
+);
+
+
 Route::post(
     '/storemessage',
     [
@@ -56,6 +90,19 @@ Route::post(
 )->name(
     'storemessage'
 );
+Route::post(
+    '/storecomment',
+    [
+        CommentController::class,
+        'store'
+    ]
+)->name(
+    'storecomment'
+);
+
+
+
+
 
 Route::get(
     '/categoryproducts/{id}/{slug}',

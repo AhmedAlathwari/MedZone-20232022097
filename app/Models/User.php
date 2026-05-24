@@ -11,7 +11,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Comment;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -68,4 +68,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+public function comments()
+{
+    return $this->hasMany(
+        Comment::class
+    );
 }
+
+}
+
+

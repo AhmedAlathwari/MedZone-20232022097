@@ -27,9 +27,32 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    $data = new Comment();
+
+    $data->user_id = auth()->id();
+
+    $data->product_id = $request->product_id;
+
+    $data->subject = $request->subject;
+
+    $data->review = $request->review;
+
+    $data->rate = $request->rate;
+
+    $data->ip = $request->ip();
+
+    $data->status = 'new';
+
+    $data->save();
+
+    return redirect()
+        ->back()
+        ->with(
+            'success',
+            'Review added successfully'
+        );
+}
 
     /**
      * Display the specified resource.
