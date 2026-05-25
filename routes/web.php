@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 Route::get(
     '/home',
     [HomeController::class, 'index']
@@ -347,6 +347,47 @@ Route::get(
    
 
 });
+
+Route::get(
+    '/admin/user',
+    [
+        AdminUserController::class,
+        'index'
+    ]
+)->name(
+    'admin.user.index'
+);
+
+Route::get(
+    '/admin/user/{id}',
+    [
+        AdminUserController::class,
+        'show'
+    ]
+)->name(
+    'admin.user.show'
+);
+
+Route::post(
+    '/admin/user/store/{id}',
+    [
+        AdminUserController::class,
+        'store'
+    ]
+)->name(
+    'admin.user.store'
+);
+
+Route::get(
+    '/admin/user/delete/{userid}/{roleid}',
+    [
+        AdminUserController::class,
+        'destroy'
+    ]
+)->name(
+        'admin.user.delete'
+);
+
 
 
 

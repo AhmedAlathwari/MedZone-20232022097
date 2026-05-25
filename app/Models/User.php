@@ -12,6 +12,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Comment;
+use App\Models\Role;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -73,6 +75,13 @@ public function comments()
 {
     return $this->hasMany(
         Comment::class
+    );
+}
+
+public function roleList()
+{
+    return $this->belongsToMany(
+        Role::class
     );
 }
 
