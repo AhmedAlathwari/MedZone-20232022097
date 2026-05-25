@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CommentController as AdminCommentController;
+
 Route::get(
     '/home',
     [HomeController::class, 'index']
@@ -388,7 +390,45 @@ Route::get(
         'admin.user.delete'
 );
 
+Route::get(
+    '/admin/comment',
+    [
+        AdminCommentController::class,
+        'index'
+    ]
+)->name(
+    'admin.comment.index'
+);
 
+Route::get(
+    '/admin/comment/{id}',
+    [
+        AdminCommentController::class,
+        'show'
+    ]
+)->name(
+    'admin.comment.show'
+);
+
+Route::post(
+    '/admin/comment/update/{id}',
+    [
+        AdminCommentController::class,
+        'update'
+    ]
+)->name(
+    'admin.comment.update'
+);
+
+Route::get(
+    '/admin/comment/delete/{id}',
+    [
+        AdminCommentController::class,
+        'destroy'
+    ]
+)->name(
+    'admin.comment.delete'
+);
 
 
 Route::middleware([

@@ -37,19 +37,21 @@ class UserController extends Controller
         );
     }
 
-    public function store(
-        Request $request,
-        $id
-    )
-    {
-        $user = User::find($id);
+ public function store(
+    Request $request,
+    $id
+)
+{
+    $user = User::find($id);
 
-        $user->roleList()->attach(
-            $request->role_id
-        );
+    $user->roleList()->syncWithoutDetaching(
+    [
+        $request->role_id
+    ]
+    );
 
-        return redirect()->back();
-    }
+    return redirect()->back();
+}
 
 public function destroy(
     $userid,
