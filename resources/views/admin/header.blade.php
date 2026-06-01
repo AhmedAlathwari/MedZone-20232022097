@@ -32,8 +32,7 @@ Dashboard
 
 <i class="fas fa-user"></i>
 
-{{ Auth::user()->name }}
-
+{{ Auth::user()?->name }}
 </a>
 
 </li>

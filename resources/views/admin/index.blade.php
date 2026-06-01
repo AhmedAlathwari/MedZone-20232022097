@@ -10,7 +10,7 @@
 
 Welcome
 
-{{ Auth::user()->name }}
+{{ Auth::user()?->name }}
 
 </p>
 

@@ -229,47 +229,31 @@ public function logoutuser()
 {
     Auth::logout();
 
+    session()->invalidate();
+
+    session()->regenerateToken();
+
     return redirect('/home');
 }
 public function logincheck(Request $request)
 {
-    $credentials =
-    $request->validate(
-        [
-            'email' =>
-            'required|email',
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-            'password' =>
-            'required'
-        ]
-    );
+   
 
-    if(
-        Auth::attempt(
-            $credentials
-        )
-    )
+    if (Auth::attempt($credentials))
     {
-        if(
-            Auth::user()->roles
-            ==
-            'admin'
-        )
+        if (Auth::user()->roleList->contains('name', 'admin'))
         {
-            return redirect(
-                '/admin'
-            );
+            return redirect('/admin');
         }
 
-        return redirect(
-            '/home'
-        );
+        return redirect('/home');
     }
 
-    return redirect()
-    ->back();
+    return 'Login Failed';
 }
-
-
-
 }

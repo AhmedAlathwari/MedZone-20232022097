@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
-
+use App\Http\Controllers\UserController;
 Route::get(
     '/home',
     [HomeController::class, 'index']
@@ -126,17 +126,19 @@ Route::post(
     [HomeController::class, 'saveData']
 );
 
-Route::get(
-    '/admin',
-    [AdminHomeController::class, 'index']
-);
+
 
 
 
 Route::prefix('admin')
 ->name('admin.')
+->middleware(['auth', 'admin'])
 ->group(function () {
-
+    
+Route::get(
+    '/',
+    [AdminHomeController::class, 'index']
+);
 Route::get(
     '/setting',
     [
@@ -452,5 +454,19 @@ Route::middleware([
     )->name(
         'dashboard'
     );
+
+
+Route::middleware(['auth'])
+->prefix('userpanel')
+->name('userpanel.')
+->group(function () {
+
+    Route::get(
+        '/',
+        [UserController::class, 'index']
+    )->name('index');
+
+});
+
 
 });
