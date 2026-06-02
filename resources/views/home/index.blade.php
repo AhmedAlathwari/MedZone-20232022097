@@ -55,11 +55,9 @@ style="
 width:270px;
 height:360px;
 background:#f5f5f5;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 border-radius:10px;
 ">
 
@@ -70,10 +68,9 @@ No Image
 @endif
 
 <h3>
-
 {{ $rs->title }}
-
 </h3>
+
 @php
     $average = $rs->comments->avg('rate');
 @endphp
@@ -92,13 +89,10 @@ No Image
 @if($average >= 5) ★ @else ☆ @endif
 </div>
 
-
 <div>
 
 <span>
-
 ${{ $rs->price }}
-
 </span>
 
 &nbsp;
@@ -114,6 +108,26 @@ ${{ $rs->price * 1.15 }}
 </span>
 
 </div>
+
+<form action="{{ route('userpanel.addcart') }}" method="POST">
+
+    @csrf
+
+    <input
+        type="hidden"
+        name="product_id"
+        value="{{ $rs->id }}">
+
+    <input
+        type="hidden"
+        name="quantity"
+        value="1">
+
+    <button type="submit">
+        Add To Cart
+    </button>
+
+</form>
 
 </div>
 

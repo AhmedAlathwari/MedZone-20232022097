@@ -131,6 +131,30 @@ ${{ $data->price * 1.20 }}
 
 </div>
 
+<hr>
+
+<form action="{{ route('userpanel.addcart') }}" method="POST">
+    @csrf
+
+    <input
+        type="hidden"
+        name="product_id"
+        value="{{ $data->id }}">
+
+    <label>Quantity</label>
+
+    <input
+        type="number"
+        name="quantity"
+        value="1"
+        min="1">
+
+    <button type="submit">
+        Add To Cart
+    </button>
+
+</form>
+
 </div>
 
 </div>

@@ -18,6 +18,20 @@
 
         </a>
 
+        |
+
+        <a href="{{ route('userpanel.shopcart') }}">
+
+            Cart
+
+            (
+
+            {{ \App\Models\ShopCart::where('user_id', Auth::id())->count() }}
+
+            )
+
+        </a>
+
     </p>
 
     @else

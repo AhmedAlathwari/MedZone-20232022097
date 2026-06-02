@@ -466,7 +466,38 @@ Route::middleware(['auth'])
         [UserController::class, 'index']
     )->name('index');
 
+    Route::get(
+    '/reviews',
+    [UserController::class, 'reviews']
+)->name('reviews');
+
+Route::get(
+    '/reviewdestroy/{id}',
+    [UserController::class, 'reviewdestroy']
+)->name('reviewdestroy');
+
+Route::post(
+    '/addcart',
+    [\App\Http\Controllers\ShopCartController::class, 'store']
+)->name('addcart');
+
+Route::get(
+    '/shopcart',
+    [\App\Http\Controllers\ShopCartController::class, 'index']
+)->name('shopcart');
+
 });
+
+Route::post(
+    '/shopcart/update/{id}',
+    [\App\Http\Controllers\ShopCartController::class, 'update']
+)->name('shopcartupdate');
+
+Route::get(
+    '/shopcart/delete/{id}',
+    [\App\Http\Controllers\ShopCartController::class, 'destroy']
+)->name('shopcartdelete');
+
 
 
 });
