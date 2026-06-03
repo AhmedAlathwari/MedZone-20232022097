@@ -201,10 +201,19 @@ Route::post(
             'destroy'
         )->name('destroy');
 
+
+
     });
 
+Route::get(
+    '/order',
+    [\App\Http\Controllers\Admin\OrderController::class, 'index']
+)->name('order.index');
 
-
+Route::get(
+    '/order/show/{id}',
+    [\App\Http\Controllers\Admin\OrderController::class, 'show']
+)->name('order.show');
     Route::prefix('product')
     ->name('product.')
     ->controller(
@@ -486,6 +495,15 @@ Route::get(
     [\App\Http\Controllers\ShopCartController::class, 'index']
 )->name('shopcart');
 
+Route::get(
+    '/order',
+    [\App\Http\Controllers\OrderController::class, 'create']
+)->name('order');
+
+Route::post(
+    '/order/store',
+    [\App\Http\Controllers\OrderController::class, 'store']
+)->name('orderstore');
 });
 
 Route::post(
@@ -497,7 +515,6 @@ Route::get(
     '/shopcart/delete/{id}',
     [\App\Http\Controllers\ShopCartController::class, 'destroy']
 )->name('shopcartdelete');
-
 
 
 });

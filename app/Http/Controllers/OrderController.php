@@ -3,61 +3,103 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\ShopCart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $data = ShopCart::where(
+            'user_id',
+            Auth::id()
+        )->get();
+
+        return view(
+            'home.user.order',
+            compact('data')
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $total = 0;
+
+        $cart = ShopCart::where(
+            'user_id',
+            Auth::id()
+        )->get();
+
+        foreach($cart as $rs)
+        {
+            $total +=
+                ($rs->product->price ?? 0)
+                *
+                $rs->quantity;
+        }
+
+        $data = new Order();
+
+        $data->user_id = Auth::id();
+        $data->name = $request->name;
+        $data->surname = $request->surname;
+        $data->email = $request->email;
+        $data->phone = $request->phone;
+        $data->address = $request->address;
+        $data->total = $total;
+        $data->ip = request()->ip();
+
+        $data->save();
+
+        foreach($cart as $rs)
+        {
+            OrderProduct::create([
+
+                'order_id' => $data->id,
+
+                'user_id' => Auth::id(),
+
+                'product_id' => $rs->product_id,
+
+                'price' => $rs->product->price,
+
+                'quantity' => $rs->quantity,
+
+                'amount' => $rs->product->price * $rs->quantity,
+
+            ]);
+        }
+
+        ShopCart::where(
+            'user_id',
+            Auth::id()
+        )->delete();
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Order $order)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Order $order)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Order $order)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Order $order)
     {
         //
