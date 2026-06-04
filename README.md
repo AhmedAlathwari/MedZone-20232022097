@@ -283,8 +283,7 @@ php artisan serve</code></pre>
 <h2>📚 Educational Purpose</h2>
 
 <p>
-    This project was developed as a university graduation project and learning exercise
-    using the Laravel framework.
+    This project was developed as part of a university coursework assignment to demonstrate practical skills in Laravel web application development.
 </p>
 
 <hr>
