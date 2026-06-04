@@ -18,13 +18,13 @@ class OrderController extends Controller
         );
     }
 
-public function show($id)
-{
-    $data = Order::find($id);
+    public function show($id)
+    {
+        $data = Order::find($id);
 
-    return view(
-        'admin.order.show',
-        compact('data')
-    );
-}
+        return view(
+            'admin.order.show',
+            compact('data')
+        );
+    }
 }

@@ -17,13 +17,14 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\UserController;
+
 Route::get(
     '/home',
     [HomeController::class, 'index']
 );
 Route::get(
-'/faq',
-[HomeController::class,'faq']
+    '/faq',
+    [HomeController::class, 'faq']
 )->name('faq');
 Route::get(
     '/test/{id}/{number}',
@@ -62,8 +63,7 @@ Route::get(
 
 Route::get(
     '/admin/login',
-    function ()
-    {
+    function () {
         return view(
             'admin.login.login'
         );
@@ -131,235 +131,225 @@ Route::post(
 
 
 Route::prefix('admin')
-->name('admin.')
-->middleware(['auth', 'admin'])
-->group(function () {
-    
-Route::get(
-    '/',
-    [AdminHomeController::class, 'index']
-);
-Route::get(
-    '/setting',
-    [
-        AdminHomeController::class,
-        'settings'
-    ]
-)->name(
-    'setting'
-);
-
-Route::post(
-    '/setting/update',
-    [
-        AdminHomeController::class,
-        'settingUpdate'
-    ]
-)->name(
-    'setting.update'
-);
-
-    Route::prefix('category')
-    ->name('category.')
-    ->controller(
-        AdminCategoryController::class
-    )
+    ->name('admin.')
+    ->middleware(['auth', 'admin'])
     ->group(function () {
 
         Route::get(
             '/',
-            'index'
-        )->name('index');
-
+            [AdminHomeController::class, 'index']
+        );
         Route::get(
-            '/create',
-            'create'
-        )->name('create');
+            '/setting',
+            [
+                AdminHomeController::class,
+                'settings'
+            ]
+        )->name(
+            'setting'
+        );
 
         Route::post(
-            '/store',
-            'store'
-        )->name('store');
+            '/setting/update',
+            [
+                AdminHomeController::class,
+                'settingUpdate'
+            ]
+        )->name(
+            'setting.update'
+        );
+
+        Route::prefix('category')
+            ->name('category.')
+            ->controller(
+                AdminCategoryController::class
+            )
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    'index'
+                )->name('index');
+
+                Route::get(
+                    '/create',
+                    'create'
+                )->name('create');
+
+                Route::post(
+                    '/store',
+                    'store'
+                )->name('store');
+
+                Route::get(
+                    '/show/{id}',
+                    'show'
+                )->name('show');
+
+                Route::get(
+                    '/edit/{id}',
+                    'edit'
+                )->name('edit');
+
+                Route::post(
+                    '/update/{id}',
+                    'update'
+                )->name('update');
+
+                Route::get(
+                    '/destroy/{id}',
+                    'destroy'
+                )->name('destroy');
+            });
 
         Route::get(
-            '/show/{id}',
-            'show'
-        )->name('show');
+            '/order',
+            [\App\Http\Controllers\Admin\OrderController::class, 'index']
+        )->name('order.index');
 
         Route::get(
-            '/edit/{id}',
-            'edit'
-        )->name('edit');
+            '/order/show/{id}',
+            [\App\Http\Controllers\Admin\OrderController::class, 'show']
+        )->name('order.show');
+        Route::prefix('product')
+            ->name('product.')
+            ->controller(
+                AdminProductController::class
+            )
+            ->group(function () {
 
-        Route::post(
-            '/update/{id}',
-            'update'
-        )->name('update');
+                Route::get(
+                    '/',
+                    'index'
+                )->name('index');
 
-        Route::get(
-            '/destroy/{id}',
-            'destroy'
-        )->name('destroy');
+                Route::get(
+                    '/create',
+                    'create'
+                )->name('create');
+
+                Route::post(
+                    '/store',
+                    'store'
+                )->name('store');
+
+                Route::get(
+                    '/show/{id}',
+                    'show'
+                )->name('show');
+
+                Route::get(
+                    '/edit/{id}',
+                    'edit'
+                )->name('edit');
+
+                Route::post(
+                    '/update/{id}',
+                    'update'
+                )->name('update');
+
+                Route::get(
+                    '/destroy/{id}',
+                    'destroy'
+                )->name('destroy');
+            });
 
 
 
+        Route::prefix('image')
+            ->name('image.')
+            ->controller(
+                AdminImageController::class
+            )
+            ->group(function () {
+
+                Route::get(
+                    '/{product_id}',
+                    'index'
+                )->name('index');
+
+                Route::post(
+                    '/store/{product_id}',
+                    'store'
+                )->name('store');
+
+                Route::get(
+                    '/destroy/{product_id}/{id}',
+                    'destroy'
+                )->name('destroy');
+            });
+
+        Route::prefix('message')
+            ->name('message.')
+            ->controller(
+                AdminMessageController::class
+            )
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    'index'
+                )->name('index');
+
+                Route::get(
+                    '/show/{id}',
+                    'show'
+                )->name('show');
+
+                Route::post(
+                    '/update/{id}',
+                    'update'
+                )->name('update');
+
+                Route::get(
+                    '/destroy/{id}',
+                    'destroy'
+                )->name('destroy');
+            });
+
+        Route::prefix('faq')
+            ->name('faq.')
+            ->controller(
+                AdminFaqController::class
+            )
+            ->group(function () {
+
+                Route::get(
+                    '/',
+                    'index'
+                )->name('index');
+
+                Route::get(
+                    '/create',
+                    'create'
+                )->name('create');
+
+                Route::post(
+                    '/store',
+                    'store'
+                )->name('store');
+
+                Route::get(
+                    '/show/{id}',
+                    'show'
+                )->name('show');
+
+                Route::get(
+                    '/edit/{id}',
+                    'edit'
+                )->name('edit');
+
+                Route::post(
+                    '/update/{id}',
+                    'update'
+                )->name('update');
+
+                Route::get(
+                    '/destroy/{id}',
+                    'destroy'
+                )->name('destroy');
+            });
     });
-
-Route::get(
-    '/order',
-    [\App\Http\Controllers\Admin\OrderController::class, 'index']
-)->name('order.index');
-
-Route::get(
-    '/order/show/{id}',
-    [\App\Http\Controllers\Admin\OrderController::class, 'show']
-)->name('order.show');
-    Route::prefix('product')
-    ->name('product.')
-    ->controller(
-        AdminProductController::class
-    )
-    ->group(function () {
-
-        Route::get(
-            '/',
-            'index'
-        )->name('index');
-
-        Route::get(
-            '/create',
-            'create'
-        )->name('create');
-
-        Route::post(
-            '/store',
-            'store'
-        )->name('store');
-
-        Route::get(
-            '/show/{id}',
-            'show'
-        )->name('show');
-
-        Route::get(
-            '/edit/{id}',
-            'edit'
-        )->name('edit');
-
-        Route::post(
-            '/update/{id}',
-            'update'
-        )->name('update');
-
-        Route::get(
-            '/destroy/{id}',
-            'destroy'
-        )->name('destroy');
-
-    });
-
-
-
-    Route::prefix('image')
-    ->name('image.')
-    ->controller(
-        AdminImageController::class
-    )
-    ->group(function () {
-
-        Route::get(
-            '/{product_id}',
-            'index'
-        )->name('index');
-
-        Route::post(
-            '/store/{product_id}',
-            'store'
-        )->name('store');
-
-        Route::get(
-            '/destroy/{product_id}/{id}',
-            'destroy'
-        )->name('destroy');
-
-    });
-
-Route::prefix('message')
-->name('message.')
-->controller(
-    AdminMessageController::class
-)
-->group(function () {
-
-    Route::get(
-        '/',
-        'index'
-    )->name('index');
-
-    Route::get(
-        '/show/{id}',
-        'show'
-    )->name('show');
-
-    Route::post(
-        '/update/{id}',
-        'update'
-    )->name('update');
-
-    Route::get(
-        '/destroy/{id}',
-        'destroy'
-    )->name('destroy');
-
-});
-
-Route::prefix('faq')
-->name('faq.')
-->controller(
-AdminFaqController::class
-)
-->group(function () {
-
-Route::get(
-'/',
-'index'
-)->name('index');
-
-Route::get(
-'/create',
-'create'
-)->name('create');
-
-Route::post(
-'/store',
-'store'
-)->name('store');
-
-Route::get(
-'/show/{id}',
-'show'
-)->name('show');
-
-Route::get(
-'/edit/{id}',
-'edit'
-)->name('edit');
-
-Route::post(
-'/update/{id}',
-'update'
-)->name('update');
-
-Route::get(
-'/destroy/{id}',
-'destroy'
-)->name('destroy');
-
-});
-
-   
-
-});
 
 Route::get(
     '/admin/user',
@@ -398,7 +388,7 @@ Route::get(
         'destroy'
     ]
 )->name(
-        'admin.user.delete'
+    'admin.user.delete'
 );
 
 Route::get(
@@ -457,7 +447,6 @@ Route::middleware([
             return view(
                 'dashboard'
             );
-
         }
 
     )->name(
@@ -465,56 +454,54 @@ Route::middleware([
     );
 
 
-Route::middleware(['auth'])
-->prefix('userpanel')
-->name('userpanel.')
-->group(function () {
+    Route::middleware(['auth'])
+        ->prefix('userpanel')
+        ->name('userpanel.')
+        ->group(function () {
+
+            Route::get(
+                '/',
+                [UserController::class, 'index']
+            )->name('index');
+
+            Route::get(
+                '/reviews',
+                [UserController::class, 'reviews']
+            )->name('reviews');
+
+            Route::get(
+                '/reviewdestroy/{id}',
+                [UserController::class, 'reviewdestroy']
+            )->name('reviewdestroy');
+
+            Route::post(
+                '/addcart',
+                [\App\Http\Controllers\ShopCartController::class, 'store']
+            )->name('addcart');
+
+            Route::get(
+                '/shopcart',
+                [\App\Http\Controllers\ShopCartController::class, 'index']
+            )->name('shopcart');
+
+            Route::get(
+                '/order',
+                [\App\Http\Controllers\OrderController::class, 'create']
+            )->name('order');
+
+            Route::post(
+                '/order/store',
+                [\App\Http\Controllers\OrderController::class, 'store']
+            )->name('orderstore');
+        });
+
+    Route::post(
+        '/shopcart/update/{id}',
+        [\App\Http\Controllers\ShopCartController::class, 'update']
+    )->name('shopcartupdate');
 
     Route::get(
-        '/',
-        [UserController::class, 'index']
-    )->name('index');
-
-    Route::get(
-    '/reviews',
-    [UserController::class, 'reviews']
-)->name('reviews');
-
-Route::get(
-    '/reviewdestroy/{id}',
-    [UserController::class, 'reviewdestroy']
-)->name('reviewdestroy');
-
-Route::post(
-    '/addcart',
-    [\App\Http\Controllers\ShopCartController::class, 'store']
-)->name('addcart');
-
-Route::get(
-    '/shopcart',
-    [\App\Http\Controllers\ShopCartController::class, 'index']
-)->name('shopcart');
-
-Route::get(
-    '/order',
-    [\App\Http\Controllers\OrderController::class, 'create']
-)->name('order');
-
-Route::post(
-    '/order/store',
-    [\App\Http\Controllers\OrderController::class, 'store']
-)->name('orderstore');
-});
-
-Route::post(
-    '/shopcart/update/{id}',
-    [\App\Http\Controllers\ShopCartController::class, 'update']
-)->name('shopcartupdate');
-
-Route::get(
-    '/shopcart/delete/{id}',
-    [\App\Http\Controllers\ShopCartController::class, 'destroy']
-)->name('shopcartdelete');
-
-
+        '/shopcart/delete/{id}',
+        [\App\Http\Controllers\ShopCartController::class, 'destroy']
+    )->name('shopcartdelete');
 });

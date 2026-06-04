@@ -1,22 +1,25 @@
-<h4>My Account</h4>
+<div class="user-menu">
 
-<ul>
+    <h4>My Account</h4>
 
-    <li>
     <a href="{{ route('userpanel.index') }}">
         My Profile
     </a>
-</li>
 
-    <li>My Orders</li>
+    <a href="#">
+        My Orders
+    </a>
 
-    <li>My Reviews</li>
+    <a href="#">
+        My Reviews
+    </a>
 
-    <li>My Products</li>
+    <a href="#">
+        My Products
+    </a>
 
-    <li>
     <a href="{{ route('logoutuser') }}">
         Logout
     </a>
-</li>
-</ul>
+
+</div>

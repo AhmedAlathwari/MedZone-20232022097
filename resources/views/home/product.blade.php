@@ -4,244 +4,213 @@
 
 @section('content')
 
-<div
-style="
-display:flex;
-gap:30px;
-flex-wrap:wrap;
-margin-top:30px;
-">
+<section class="product-detail-section">
 
-<div>
+    <div class="container product-detail-grid">
 
-@if($data->images->first())
+        <div class="product-gallery">
 
-<img
-src="{{ Storage::url($data->images->first()->image) }}"
-style="
-width:400px;
-height:400px;
-object-fit:cover;
-border-radius:10px;
-"
-alt="{{ $data->title }}">
+            @if($data->images->first())
 
-@endif
+            <img
+                src="{{ Storage::url($data->images->first()->image) }}"
+                class="product-main-image"
+                alt="{{ $data->title }}">
 
-<div
-style="
-display:flex;
-gap:10px;
-margin-top:15px;
-flex-wrap:wrap;
-">
+            @else
 
-@foreach($images as $rs)
+            <div class="product-main-no-image">
+                No Image
+            </div>
 
-<img
-src="{{ Storage::url($rs->image) }}"
-style="
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:8px;
-"
-alt="{{ $rs->title }}">
+            @endif
 
-@endforeach
+            <div class="product-thumbs">
 
-</div>
+                @foreach($images as $rs)
 
-</div>
+                <img
+                    src="{{ Storage::url($rs->image) }}"
+                    class="product-thumb"
+                    alt="{{ $rs->title }}">
 
-<div>
+                @endforeach
 
-<h1>
+            </div>
 
-{{ $data->title }}
+        </div>
 
-</h1>
+        <div class="product-info">
 
-@php
-    $average = $data->comments->avg('rate');
-@endphp
+            <div class="product-badge">
+                Medicine
+            </div>
 
-<div>
-    Reviews: {{ $data->comments->count() }}
+            <h1>
+                {{ $data->title }}
+            </h1>
 
-    |
+            @php
+            $average = $data->comments->avg('rate');
+            @endphp
 
-    Average Rate:
-    {{ number_format($average, 1) }}
-</div>
-<div>
+            <div class="product-detail-rating">
 
-@if($average >= 1)
-★
-@else
-☆
-@endif
+                @if($average >= 1) ★ @else ☆ @endif
+                @if($average >= 2) ★ @else ☆ @endif
+                @if($average >= 3) ★ @else ☆ @endif
+                @if($average >= 4) ★ @else ☆ @endif
+                @if($average >= 5) ★ @else ☆ @endif
 
-@if($average >= 2)
-★
-@else
-☆
-@endif
+                <span>
+                    {{ $data->comments->count() }} Reviews |
+                    Average Rate: {{ number_format($average, 1) }}
+                </span>
 
-@if($average >= 3)
-★
-@else
-☆
-@endif
+            </div>
 
-@if($average >= 4)
-★
-@else
-☆
-@endif
+            <div class="product-detail-price">
 
-@if($average >= 5)
-★
-@else
-☆
-@endif
+                <span class="detail-price-current">
+                    ${{ $data->price }}
+                </span>
 
-</div>
+                <span class="detail-price-old">
+                    ${{ number_format($data->price * 1.20, 2) }}
+                </span>
 
+            </div>
 
-<h3>
+            <div class="product-description">
 
-${{ $data->price }}
+                {!! $data->detail !!}
 
-<span
-style="
-text-decoration:line-through;
-color:gray;
-">
+            </div>
 
-${{ $data->price * 1.20 }}
+            <form
+                action="{{ route('userpanel.addcart') }}"
+                method="POST"
+                class="product-cart-form">
 
-</span>
+                @csrf
 
-</h3>
+                <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{ $data->id }}">
 
-<div>
+                <label>Quantity</label>
 
-{!! $data->detail !!}
+                <input
+                    type="number"
+                    name="quantity"
+                    value="1"
+                    min="1">
 
-</div>
+                <button type="submit">
+                    Add To Cart
+                </button>
 
-<hr>
+            </form>
 
-<form action="{{ route('userpanel.addcart') }}" method="POST">
-    @csrf
+        </div>
 
-    <input
-        type="hidden"
-        name="product_id"
-        value="{{ $data->id }}">
-
-    <label>Quantity</label>
-
-    <input
-        type="number"
-        name="quantity"
-        value="1"
-        min="1">
-
-    <button type="submit">
-        Add To Cart
-    </button>
-
-</form>
-
-</div>
-
-</div>
-
-<hr>
-
-<h3>Write Your Review</h3>
-
-@if(Auth::check())
-
-<form action="{{ route('storecomment') }}" method="POST">
-
-    @csrf
-
-    <input
-        type="hidden"
-        name="product_id"
-        value="{{ $data->id }}">
-
-    <div>
-        <label>Subject</label>
-        <input
-            type="text"
-            name="subject"
-            required>
     </div>
 
-    <div>
-        <label>Review</label>
-        <textarea
-            name="review"
-            required></textarea>
+</section>
+
+<section class="review-section">
+
+    <div class="container review-grid">
+
+        <div class="review-form-card">
+
+            <h3>Write Your Review</h3>
+
+            @if(Auth::check())
+
+            <form action="{{ route('storecomment') }}" method="POST">
+
+                @csrf
+
+                <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{ $data->id }}">
+
+                <label>Subject</label>
+                <input
+                    type="text"
+                    name="subject"
+                    required>
+
+                <label>Review</label>
+                <textarea
+                    name="review"
+                    required></textarea>
+
+                <label>Rate</label>
+                <select name="rate" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <button type="submit">
+                    Submit Review
+                </button>
+
+            </form>
+
+            @else
+
+            <p>
+                Please login to add your review.
+                <a href="{{ route('login') }}">Login</a>
+            </p>
+
+            @endif
+
+        </div>
+
+        <div class="reviews-list-card">
+
+            <h3>Product Reviews</h3>
+
+            @if($comments->count() > 0)
+
+            @foreach($comments as $rs)
+
+            <div class="single-review">
+
+                <strong>{{ $rs->user->name }}</strong>
+
+                <p class="review-rate">
+                    Rate: {{ $rs->rate }}
+                </p>
+
+                <h4>{{ $rs->subject }}</h4>
+
+                <p>{{ $rs->review }}</p>
+
+                <small>{{ $rs->created_at }}</small>
+
+            </div>
+
+            @endforeach
+
+            @else
+
+            <p>No reviews yet.</p>
+
+            @endif
+
+        </div>
+
     </div>
 
-    <div>
-        <label>Rate</label>
-        <select name="rate" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-    </div>
-
-    <button type="submit">
-        Submit Review
-    </button>
-
-</form>
-
-@else
-
-<p>
-    Please login to add your review.
-    <a href="{{ route('login') }}">Login</a>
-</p>
-
-@endif
-
-<hr>
-
-<h3>Product Reviews</h3>
-
-@foreach($comments as $rs)
-
-<div>
-    <strong>{{ $rs->user->name }}</strong>
-
-    <p>
-        Rate: {{ $rs->rate }}
-    </p>
-
-    <h4>{{ $rs->subject }}</h4>
-
-    <p>{{ $rs->review }}</p>
-
-    <small>{{ $rs->created_at }}</small>
-</div>
-
-<hr>
-
-@endforeach
-
-
-
-
-
+</section>
 
 @endsection

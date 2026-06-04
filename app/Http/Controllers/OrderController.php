@@ -37,8 +37,7 @@ class OrderController extends Controller
             Auth::id()
         )->get();
 
-        foreach($cart as $rs)
-        {
+        foreach ($cart as $rs) {
             $total +=
                 ($rs->product->price ?? 0)
                 *
@@ -58,8 +57,7 @@ class OrderController extends Controller
 
         $data->save();
 
-        foreach($cart as $rs)
-        {
+        foreach ($cart as $rs) {
             OrderProduct::create([
 
                 'order_id' => $data->id,

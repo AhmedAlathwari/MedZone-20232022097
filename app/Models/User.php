@@ -71,20 +71,17 @@ class User extends Authenticatable
         ];
     }
 
-public function comments()
-{
-    return $this->hasMany(
-        Comment::class
-    );
+    public function comments()
+    {
+        return $this->hasMany(
+            Comment::class
+        );
+    }
+
+    public function roleList()
+    {
+        return $this->belongsToMany(
+            Role::class
+        );
+    }
 }
-
-public function roleList()
-{
-    return $this->belongsToMany(
-        Role::class
-    );
-}
-
-}
-
-

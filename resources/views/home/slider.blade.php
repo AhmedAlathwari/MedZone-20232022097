@@ -1,78 +1,56 @@
-<div class="slider-area">
+<div class="hero-section">
 
-    <div
-        style="
-        display:flex;
-        gap:30px;
-        flex-wrap:wrap;
-        justify-content:center;
-        margin-top:20px;
-        ">
+    <div class="container hero-content">
 
-        @foreach($sliderdata as $rs)
+        <div class="hero-title">
 
-        <div
-            style="
-            width:350px;
-            text-align:center;
-            border:1px solid #ddd;
-            padding:15px;
-            border-radius:12px;
-            ">
+            <span class="hero-badge">
+                Trusted Healthcare Partner
+            </span>
 
-            @if($rs->images->first())
+            <h1>
+                Your Health,
+                <span>Our Priority</span>
+            </h1>
 
-            <img
-                src="{{ Storage::url($rs->images->first()->image) }}"
-                style="
-                width:100%;
-                height:220px;
-                object-fit:cover;
-                border-radius:10px;
-                "
-                alt="{{ $rs->title }}">
+            <p>
+                Order genuine medicines online with fast,
+                secure and reliable delivery.
+            </p>
 
-            @else
+            <div class="hero-buttons">
 
-            <div
-                style="
-                width:100%;
-                height:220px;
-                background:#f5f5f5;
-                border-radius:10px;
+                <a
+                    class="hero-btn hero-btn-primary"
+                    href="#products">
 
-                display:flex;
-                align-items:center;
-                justify-content:center;
+                    Shop Medicines
 
-                font-size:22px;
-                font-weight:bold;
-                color:#777;
-                ">
+                </a>
 
-                No Image
+                <a
+                    class="hero-btn hero-btn-secondary"
+                    href="{{ route('categoryproducts',
+                    [
+                    'id'=>1,
+                    'slug'=>'medicine'
+                    ]) }}">
+
+                    Browse Categories
+
+                </a>
 
             </div>
 
-            @endif
-
-            <h2>
-
-                {{ $rs->title }}
-
-            </h2>
-
-            <a
-    href="{{ route('product',['id'=>$rs->id]) }}"
-    class="btn btn-primary">
-
-    Shop Now
-
-</a>
-
         </div>
 
-        @endforeach
+        <div class="hero-image">
+
+            <img
+                src="{{ asset('assets/img/hero.png') }}"
+                alt="Doctor">
+
+        </div>
 
     </div>
 

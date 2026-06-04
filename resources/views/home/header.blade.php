@@ -1,61 +1,48 @@
-<header>
+<header class="site-header">
 
-    <h2>MedZone Pharmacy Header</h2>
+    <div class="container header-content">
 
-    @auth
-
-    <p>
-
-        Welcome
-
-        {{ Auth::user()->name }}
-
-        |
-
-        <a href="/logoutuser">
-
-            Logout
-
+        <a href="/home" class="site-logo">
+            <span class="logo-icon">+</span>
+            <span>MedZone</span>
         </a>
 
-        |
+        <div class="header-search">
+            <input type="text" placeholder="Search for medicines...">
+        </div>
 
-        <a href="{{ route('userpanel.shopcart') }}">
+        <nav class="site-nav">
 
-            Cart
+            <a href="/home">Home</a>
 
-            (
+            <a href="/home#products">Products</a>
 
-            {{ \App\Models\ShopCart::where('user_id', Auth::id())->count() }}
+            @auth
 
-            )
+            <a href="/userpanel">My Panel</a>
 
-        </a>
+            <a class="cart-link" href="{{ route('userpanel.shopcart') }}">
+                🛒 Cart
+                <span>
+                    {{ \App\Models\ShopCart::where('user_id', Auth::id())->count() }}
+                </span>
+            </a>
 
-    </p>
+            <a href="/logoutuser">Logout</a>
 
-    @else
+            @else
 
-    <p>
+            <a href="{{ route('login') }}">Login/Register</a>
 
-        <a href="{{ route('login') }}">
+            <a class="cart-link" href="{{ route('userpanel.shopcart') }}">
+                🛒 Cart
+                <span>0</span>
+            </a>
 
-            Login
+            @endauth
 
-        </a>
+        </nav>
 
-        |
-
-        <a href="{{ route('register') }}">
-
-            Join
-
-        </a>
-
-    </p>
-
-    @endauth
-
-    <hr>
+    </div>
 
 </header>

@@ -4,99 +4,116 @@
 
 @section('content')
 
-<div class="row">
+@php
+$total = 0;
+@endphp
 
-    <div class="col-md-2">
+<section class="checkout-section">
 
-        @include('home.user.user_menu')
+    <div class="container">
+
+        <div class="checkout-layout">
+
+            <div class="cart-menu-card">
+
+                @include('home.user.user_menu')
+
+            </div>
+
+            <div class="checkout-card">
+
+                <h1>Checkout</h1>
+
+                <p class="checkout-subtitle">
+                    Complete your information to place the order.
+                </p>
+
+                <form
+                    action="{{ route('userpanel.orderstore') }}"
+                    method="POST"
+                    class="checkout-form">
+
+                    @csrf
+
+                    <div class="checkout-fields">
+
+                        <div>
+                            <label>Name</label>
+                            <input type="text" name="name">
+                        </div>
+
+                        <div>
+                            <label>Surname</label>
+                            <input type="text" name="surname">
+                        </div>
+
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="email">
+                        </div>
+
+                        <div>
+                            <label>Phone</label>
+                            <input type="text" name="phone">
+                        </div>
+
+                        <div class="full-field">
+                            <label>Address</label>
+                            <input type="text" name="address">
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="complete-order-btn">
+                        Complete Order
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="checkout-summary-card">
+
+                <h2>Order Summary</h2>
+
+                @foreach($data as $rs)
+
+                @php
+                $subtotal = ($rs->product->price ?? 0) * $rs->quantity;
+                $total += $subtotal;
+                @endphp
+
+                <div class="checkout-summary-item">
+
+                    <div>
+                        <strong>{{ $rs->product->title ?? '' }}</strong>
+                        <p>Quantity: {{ $rs->quantity }}</p>
+                    </div>
+
+                    <span>
+                        ${{ $subtotal }}
+                    </span>
+
+                </div>
+
+                @endforeach
+
+                <div class="checkout-total">
+
+                    <span>Grand Total</span>
+
+                    <strong>
+                        ${{ $total }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="col-md-10">
-
-        @php
-        $total = 0;
-        @endphp
-
-        <h3>Cart Summary</h3>
-
-        <table border="1" width="100%">
-
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-
-            @foreach($data as $rs)
-
-            @php
-            $subtotal = ($rs->product->price ?? 0) * $rs->quantity;
-            $total += $subtotal;
-            @endphp
-
-            <tr>
-                <td>{{ $rs->product->title ?? '' }}</td>
-                <td>{{ $rs->product->price ?? 0 }}</td>
-                <td>{{ $rs->quantity }}</td>
-                <td>{{ $subtotal }}</td>
-            </tr>
-
-            @endforeach
-
-            <tr>
-                <td colspan="3">
-                    <strong>Grand Total</strong>
-                </td>
-
-                <td>
-                    <strong>{{ $total }}</strong>
-                </td>
-            </tr>
-
-        </table>
-
-        <hr>
-
-        <form action="{{ route('userpanel.orderstore') }}"
-              method="POST">
-
-            @csrf
-
-            <p>
-                Name
-                <input type="text" name="name">
-            </p>
-
-            <p>
-                Surname
-                <input type="text" name="surname">
-            </p>
-
-            <p>
-                Email
-                <input type="email" name="email">
-            </p>
-
-            <p>
-                Phone
-                <input type="text" name="phone">
-            </p>
-
-            <p>
-                Address
-                <input type="text" name="address">
-            </p>
-
-            <button type="submit">
-                Complete Order
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
+</section>
 
 @endsection

@@ -10,129 +10,191 @@
 
 @section('content')
 
-<h1>Welcome To MedZone</h1>
+<section class="products-section" id="products">
 
-<p>Online Pharmacy Store</p>
+    <div class="container">
 
-<h2>Featured Products</h2>
+        <div class="section-heading">
 
-<div
-style="
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
-margin-top:20px;
-">
+            <h1>
+                Featured Medicines
+            </h1>
 
-@foreach($productlist1 as $rs)
+            <p>
+                Popular and trusted healthcare products chosen for your needs.
+            </p>
 
-<div
-style="
-width:270px;
-border:1px solid #ddd;
-padding:15px;
-border-radius:10px;
-text-align:center;
-">
+        </div>
 
-@if($rs->images->first())
+        <div class="products-grid">
 
-<img
-src="{{ Storage::url($rs->images->first()->image) }}"
-style="
-width:270px;
-height:360px;
-object-fit:cover;
-border-radius:10px;
-"
-alt="{{ $rs->title }}">
+            @foreach($productlist1 as $rs)
 
-@else
+            <div class="product-card">
 
-<div
-style="
-width:270px;
-height:360px;
-background:#f5f5f5;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-">
+                @if($rs->images->first())
 
-No Image
+                <a href="{{ route('product',['id'=>$rs->id]) }}">
 
-</div>
+                    <img
+                        src="{{ Storage::url($rs->images->first()->image) }}"
+                        class="product-image"
+                        alt="{{ $rs->title }}">
 
-@endif
+                </a>
 
-<h3>
-{{ $rs->title }}
-</h3>
+                @else
 
-@php
-    $average = $rs->comments->avg('rate');
-@endphp
+                <a href="{{ route('product',['id'=>$rs->id]) }}">
 
-<div>
-    Reviews: {{ $rs->comments->count() }}
-    |
-    Average Rate: {{ number_format($average, 1) }}
-</div>
+                    <div class="product-no-image">
+                        No Image
+                    </div>
 
-<div>
-@if($average >= 1) ★ @else ☆ @endif
-@if($average >= 2) ★ @else ☆ @endif
-@if($average >= 3) ★ @else ☆ @endif
-@if($average >= 4) ★ @else ☆ @endif
-@if($average >= 5) ★ @else ☆ @endif
-</div>
+                </a>
 
-<div>
+                @endif
 
-<span>
-${{ $rs->price }}
-</span>
+                <div class="product-content">
 
-&nbsp;
+                    <div class="product-category">
+                        Medicine
+                    </div>
 
-<span
-style="
-text-decoration:line-through;
-color:gray;
-">
+                    <h3 class="product-title">
 
-${{ $rs->price * 1.15 }}
+                        <a href="{{ route('product',['id'=>$rs->id]) }}">
+                            {{ $rs->title }}
+                        </a>
 
-</span>
+                    </h3>
 
-</div>
+                    @php
+                    $average = $rs->comments->avg('rate');
+                    @endphp
 
-<form action="{{ route('userpanel.addcart') }}" method="POST">
+                    <div class="product-rating">
 
-    @csrf
+                        @if($average >= 1) ★ @else ☆ @endif
+                        @if($average >= 2) ★ @else ☆ @endif
+                        @if($average >= 3) ★ @else ☆ @endif
+                        @if($average >= 4) ★ @else ☆ @endif
+                        @if($average >= 5) ★ @else ☆ @endif
 
-    <input
-        type="hidden"
-        name="product_id"
-        value="{{ $rs->id }}">
+                        <span>
+                            {{ $rs->comments->count() }} Reviews
+                        </span>
 
-    <input
-        type="hidden"
-        name="quantity"
-        value="1">
+                    </div>
 
-    <button type="submit">
-        Add To Cart
-    </button>
+                    <div class="product-price">
 
-</form>
+                        <span class="price-current">
+                            ${{ $rs->price }}
+                        </span>
 
-</div>
+                        <span class="price-old">
+                            ${{ number_format($rs->price * 1.15, 2) }}
+                        </span>
 
-@endforeach
+                    </div>
 
-</div>
+                    <form action="{{ route('userpanel.addcart') }}" method="POST">
+
+                        @csrf
+
+                        <input
+                            type="hidden"
+                            name="product_id"
+                            value="{{ $rs->id }}">
+
+                        <input
+                            type="hidden"
+                            name="quantity"
+                            value="1">
+
+                        <button
+                            type="submit"
+                            class="add-cart-btn">
+
+                            Add To Cart
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            @endforeach
+
+        </div>
+
+    </div>
+
+</section>
+<section class="why-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <h1>
+                Why Choose MedZone?
+            </h1>
+
+            <p>
+                We provide a safe and reliable online pharmacy shopping experience.
+            </p>
+
+        </div>
+
+        <div class="why-grid">
+
+            <div class="why-card">
+                <div class="why-icon">🛡️</div>
+                <h3>Verified Quality</h3>
+                <p>Every product is checked and trusted before delivery.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">🚚</div>
+                <h3>Safe Delivery</h3>
+                <p>Fast and secure delivery for your pharmacy products.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">💬</div>
+                <h3>24/7 Support</h3>
+                <p>Our support team is ready to help you anytime.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="help-section">
+
+    <div class="container">
+
+        <h2>
+            Need Help Finding the Right Medicine?
+        </h2>
+
+        <p>
+            Our licensed pharmacists are available 24/7
+            to answer your questions and provide expert guidance.
+        </p>
+
+        <a href="/contact" class="help-btn">
+            Talk to a Pharmacist
+        </a>
+
+    </div>
+
+</section>
 
 @endsection

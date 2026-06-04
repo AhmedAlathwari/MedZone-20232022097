@@ -8,91 +8,119 @@
 $total = 0;
 @endphp
 
-<div class="row">
+<section class="cart-section">
 
-    <div class="col-md-2">
+    <div class="container">
 
-        @include('home.user.user_menu')
+        <div class="cart-layout">
 
-    </div>
+            <div class="cart-menu-card">
 
-    <div class="col-md-10">
+                @include('home.user.user_menu')
 
-        <table border="1" width="100%">
+            </div>
 
-            <tr>
-                <th>ID</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Delete</th>
-            </tr>
+            <div class="cart-card">
 
-            @foreach($data as $rs)
+                <h1>Shopping Cart</h1>
 
-            @php
-            $subtotal = ($rs->product->price ?? 0) * $rs->quantity;
-            $total += $subtotal;
-            @endphp
+                <p class="cart-subtitle">
+                    Review your selected medicines before checkout.
+                </p>
 
-            <tr>
-                <td>{{ $rs->id }}</td>
+                <div class="cart-items">
 
-                <td>{{ $rs->product->title ?? '' }}</td>
+                    @foreach($data as $rs)
 
-                <td>{{ $rs->product->price ?? 0 }}</td>
+                    @php
+                    $subtotal = ($rs->product->price ?? 0) * $rs->quantity;
+                    $total += $subtotal;
+                    @endphp
 
-                <td>
-                    <form action="{{ route('shopcartupdate', ['id' => $rs->id]) }}"
-                          method="POST">
+                    <div class="cart-item">
 
-                        @csrf
+                        <div class="cart-product">
 
-                        <input
-                            type="number"
-                            name="quantity"
-                            value="{{ $rs->quantity }}"
-                            min="1">
+                            @if($rs->product && $rs->product->images->first())
 
-                        <button type="submit">
-                            Update
-                        </button>
+                            <img
+                                src="{{ Storage::url($rs->product->images->first()->image) }}"
+                                class="cart-product-image"
+                                alt="{{ $rs->product->title }}">
 
-                    </form>
-                </td>
+                            @endif
 
-                <td>{{ $subtotal }}</td>
+                            <div class="cart-item-info">
 
-                <td>
-                    <a
-                        href="{{ route('shopcartdelete', ['id' => $rs->id]) }}"
-                        onclick="return confirm('Are you sure?')">
+                                <h3>
+                                    {{ $rs->product->title ?? '' }}
+                                </h3>
 
-                        Delete
+                                <p>
+                                    Price: ${{ $rs->product->price ?? 0 }}
+                                </p>
 
+                            </div>
+
+                        </div>
+
+                        <form
+                            action="{{ route('shopcartupdate', ['id' => $rs->id]) }}"
+                            method="POST"
+                            class="cart-update-form">
+
+                            @csrf
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                value="{{ $rs->quantity }}"
+                                min="1">
+
+                            <button type="submit">
+                                Update
+                            </button>
+
+                        </form>
+
+                        <div class="cart-item-total">
+                            ${{ $subtotal }}
+                        </div>
+
+                        <a
+                            class="cart-delete"
+                            href="{{ route('shopcartdelete', ['id' => $rs->id]) }}"
+                            onclick="return confirm('Are you sure?')">
+
+                            Delete
+
+                        </a>
+
+                    </div>
+
+                    @endforeach
+
+                </div>
+
+                <div class="cart-summary">
+
+                    <div>
+                        <span>Grand Total</span>
+                        <strong>${{ $total }}</strong>
+                    </div>
+
+                    <a href="/userpanel/order" class="checkout-btn">
+                        Continue Checkout
                     </a>
-                </td>
-            </tr>
 
-            @endforeach
+                </div>
 
-            <tr>
-                <td colspan="4">
-                    <strong>Grand Total</strong>
-                </td>
+            </div>
 
-                <td>
-                    <strong>{{ $total }}</strong>
-                </td>
-
-                <td></td>
-            </tr>
-
-        </table>
+        </div>
 
     </div>
 
-</div>
+</section>
 
 @endsection

@@ -12,17 +12,17 @@ class ShopCartController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $data = ShopCart::where(
-        'user_id',
-        Auth::id()
-    )->get();
+    {
+        $data = ShopCart::where(
+            'user_id',
+            Auth::id()
+        )->get();
 
-    return view(
-        'home.user.shopcart',
-        compact('data')
-    );
-}
+        return view(
+            'home.user.shopcart',
+            compact('data')
+        );
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,38 +36,35 @@ class ShopCartController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $data = ShopCart::where(
-        'product_id',
-        $request->product_id
-    )->where(
-        'user_id',
-        Auth::id()
-    )->first();
-
-    if($data)
     {
-        $data->quantity =
-            $data->quantity +
-            $request->quantity;
+        $data = ShopCart::where(
+            'product_id',
+            $request->product_id
+        )->where(
+            'user_id',
+            Auth::id()
+        )->first();
 
-        $data->save();
+        if ($data) {
+            $data->quantity =
+                $data->quantity +
+                $request->quantity;
+
+            $data->save();
+        } else {
+            ShopCart::create([
+
+                'user_id' => Auth::id(),
+
+                'product_id' => $request->product_id,
+
+                'quantity' => $request->quantity,
+
+            ]);
+        }
+
+        return redirect()->back();
     }
-    else
-    {
-        ShopCart::create([
-
-            'user_id' => Auth::id(),
-
-            'product_id' => $request->product_id,
-
-            'quantity' => $request->quantity,
-
-        ]);
-    }
-
-    return redirect()->back();
-}
     /**
      * Display the specified resource.
      */
@@ -88,25 +85,25 @@ class ShopCartController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $data = ShopCart::find($id);
+    {
+        $data = ShopCart::find($id);
 
-    $data->quantity = $request->quantity;
+        $data->quantity = $request->quantity;
 
-    $data->save();
+        $data->save();
 
-    return redirect()->back();
-}
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    $data = ShopCart::find($id);
+    {
+        $data = ShopCart::find($id);
 
-    $data->delete();
+        $data->delete();
 
-    return redirect()->back();
-}
+        return redirect()->back();
+    }
 }

@@ -1,58 +1,35 @@
 @php
-
-$mainCategories =
-\App\Http\Controllers\HomeController
-::mainCategoryList();
-
+$mainCategories = \App\Http\Controllers\HomeController::mainCategoryList();
 @endphp
 
-<div>
+<div class="category-bar">
 
-<p>
+    <div class="container">
 
-Categories
+        <span class="category-title">
+            Categories:
+        </span>
 
-</p>
+        <div class="category-links">
 
-<div class="category-menu-list">
+            @foreach($mainCategories as $rs)
 
-<ul>
+            <a href="{{ route('categoryproducts', ['id' => $rs->id, 'slug' => $rs->title]) }}">
+                {{ $rs->title }}
+            </a>
 
-@foreach($mainCategories as $rs)
+            @foreach($rs->children as $child)
 
-<li>
+            <a href="{{ route('categoryproducts', ['id' => $child->id, 'slug' => $child->title]) }}">
+                {{ $child->title }}
+            </a>
 
-<a href="{{ route(
-'categoryproducts',
-[
-'id'=>$rs->id,
-'slug'=>$rs->title
-]
-) }}">
+            @endforeach
 
-{{ $rs->title }}
+            @endforeach
 
-</a>
+        </div>
 
-@if($rs->children->count() > 0)
-
-@include(
-'home.categorytree',
-[
-'children' => $rs->children
-]
-)
-
-@endif
-
-</li>
-
-@endforeach
-
-</ul>
+    </div>
 
 </div>
-
-</div>
-
-<hr>
