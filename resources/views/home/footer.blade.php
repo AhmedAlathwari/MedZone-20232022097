@@ -29,7 +29,11 @@
                 <li><a href="/about">About</a></li>
 
                 <li><a href="/contact">Contact</a></li>
-
+                <li>
+                    <a href="{{ route('adminlogin') }}">
+                        Admin Login
+                    </a>
+                </li>
             </ul>
 
         </div>
