@@ -22,6 +22,16 @@
 
         </li>
 
+        <li class="nav-item d-none d-sm-inline-block">
+
+            <a href="/home" class="nav-link">
+
+                Website
+
+            </a>
+
+        </li>
+
     </ul>
 
     <ul class="navbar-nav ml-auto">
