@@ -15,3 +15,5 @@ RUN npm install
 RUN npm run build
 
 RUN chmod -R 775 storage bootstrap/cache
+
+CMD php artisan migrate --force && /start.sh
