@@ -4,6 +4,8 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
+RUN apk add --no-cache nodejs npm
+
 RUN composer install --no-dev --optimize-autoloader
 
 RUN npm install
