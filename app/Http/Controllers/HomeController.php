@@ -11,6 +11,7 @@ use App\Models\Message;
 use App\Models\Ffaq;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     public function index()
@@ -35,14 +36,14 @@ class HomeController extends Controller
 
         $images = Image::where('product_id', $id)->get();
         $comments = Comment::where(
-    'product_id',
-    $id
-)
-->where(
-    'status',
-    'true'
-)
-->get();
+            'product_id',
+            $id
+        )
+            ->where(
+                'status',
+                'true'
+            )
+            ->get();
 
         return view(
             'home.product',
@@ -82,10 +83,10 @@ class HomeController extends Controller
             '=',
             0
         )
-        ->with(
-            'children'
-        )
-        ->get();
+            ->with(
+                'children'
+            )
+            ->get();
     }
 
     public function about()
@@ -129,43 +130,43 @@ class HomeController extends Controller
         $data = new Message();
 
         $data->name =
-        $request->input(
-            'name'
-        );
+            $request->input(
+                'name'
+            );
 
         $data->email =
-        $request->input(
-            'email'
-        );
+            $request->input(
+                'email'
+            );
 
         $data->phone =
-        $request->input(
-            'phone'
-        );
+            $request->input(
+                'phone'
+            );
 
         $data->subject =
-        $request->input(
-            'subject'
-        );
+            $request->input(
+                'subject'
+            );
 
         $data->message =
-        $request->input(
-            'message'
-        );
+            $request->input(
+                'message'
+            );
 
         $data->ip =
-        $request->ip();
+            $request->ip();
 
         $data->save();
 
         return redirect()
-        ->route(
-            'contact'
-        )
-        ->with(
-            'success',
-            'Your message has been sent successfully!'
-        );
+            ->route(
+                'contact'
+            )
+            ->with(
+                'success',
+                'Your message has been sent successfully!'
+            );
     }
 
     public function calculation($id, $number)
@@ -206,54 +207,63 @@ class HomeController extends Controller
             .
             $lastName;
     }
-public function faq()
-{
-    $setting = Setting::first();
-
-    $faq = Ffaq::where(
-        'status',
-        'True'
-    )->get();
-
-    return view(
-        'home.faq',
-        [
-            'setting' => $setting,
-
-            'faq' => $faq
-        ]
-    );
-}
-
-public function logoutuser()
-{
-    Auth::logout();
-
-    session()->invalidate();
-
-    session()->regenerateToken();
-
-    return redirect('/home');
-}
-public function logincheck(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
-
-   
-
-    if (Auth::attempt($credentials))
+    public function faq()
     {
-        if (Auth::user()->roleList->contains('name', 'admin'))
-        {
-            return redirect('/admin');
-        }
+        $setting = Setting::first();
+
+        $faq = Ffaq::where(
+            'status',
+            'True'
+        )->get();
+
+        return view(
+            'home.faq',
+            [
+                'setting' => $setting,
+
+                'faq' => $faq
+            ]
+        );
+    }
+
+    public function logoutuser()
+    {
+        Auth::logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
 
         return redirect('/home');
     }
+    public function logincheck(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-    return 'Login Failed';
-}
+
+
+        if (Auth::attempt($credentials)) {
+            if (Auth::user()->roleList->contains('name', 'admin')) {
+                return redirect('/admin');
+            }
+
+            return redirect('/home');
+        }
+
+        return 'Login Failed';
+    }
+
+    public function adminlogout()
+    {
+        Auth::logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
+
+        return redirect('/admin/login');
+    }
 }

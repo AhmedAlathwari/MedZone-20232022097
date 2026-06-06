@@ -1,53 +1,55 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-<ul class="navbar-nav">
+    <ul class="navbar-nav">
 
-<li class="nav-item">
+        <li class="nav-item">
 
-<a class="nav-link" data-widget="pushmenu" href="#">
+            <a class="nav-link" data-widget="pushmenu" href="#">
 
-<i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i>
 
-</a>
+            </a>
 
-</li>
+        </li>
 
-<li class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
 
-<a href="/admin" class="nav-link">
+            <a href="/admin" class="nav-link">
 
-Dashboard
+                Dashboard
 
-</a>
+            </a>
 
-</li>
+        </li>
 
-</ul>
+    </ul>
 
-<ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto">
 
-<li class="nav-item">
+        <li class="nav-item">
 
-<a class="nav-link">
+            <a class="nav-link">
 
-<i class="fas fa-user"></i>
+                <i class="fas fa-user"></i>
 
-{{ Auth::user()?->name }}
-</a>
+                {{ Auth::user()?->name }}
 
-</li>
+            </a>
 
-<li class="nav-item">
+        </li>
 
-<a
-class="nav-link"
-href="/logoutuser">
+        <li class="nav-item">
 
-Logout
+            <a
+                class="nav-link"
+                href="{{ route('adminlogout') }}">
 
-</a>
+                Logout
 
-</li>
+            </a>
 
-</ul>
+        </li>
+
+    </ul>
+
 </nav>

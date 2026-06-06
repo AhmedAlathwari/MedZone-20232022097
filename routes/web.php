@@ -81,7 +81,15 @@ Route::post(
 )->name(
     'adminlogincheck'
 );
-
+Route::get(
+    '/admin/logout',
+    [
+        HomeController::class,
+        'adminlogout'
+    ]
+)->name(
+    'adminlogout'
+);
 
 Route::post(
     '/storemessage',
@@ -132,7 +140,7 @@ Route::post(
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'admin'])
+    ->middleware(['admin'])
     ->group(function () {
 
         Route::get(
@@ -468,7 +476,15 @@ Route::middleware([
                 '/reviews',
                 [UserController::class, 'reviews']
             )->name('reviews');
+            Route::get(
+                '/orders',
+                [UserController::class, 'orders']
+            )->name('orders');
 
+            Route::get(
+                '/orders/{id}',
+                [UserController::class, 'orderdetail']
+            )->name('orderdetail');
             Route::get(
                 '/reviewdestroy/{id}',
                 [UserController::class, 'reviewdestroy']

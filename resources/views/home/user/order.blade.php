@@ -39,27 +39,27 @@ $total = 0;
 
                         <div>
                             <label>Name</label>
-                            <input type="text" name="name">
+                            <input type="text" name="name" required>
                         </div>
 
                         <div>
                             <label>Surname</label>
-                            <input type="text" name="surname">
+                            <input type="text" name="surname" required>
                         </div>
 
                         <div>
                             <label>Email</label>
-                            <input type="email" name="email">
+                            <input type="email" name="email" required>
                         </div>
 
                         <div>
                             <label>Phone</label>
-                            <input type="text" name="phone">
+                            <input type="text" name="phone" required>
                         </div>
 
                         <div class="full-field">
                             <label>Address</label>
-                            <input type="text" name="address">
+                            <input type="text" name="address" required>
                         </div>
 
                     </div>

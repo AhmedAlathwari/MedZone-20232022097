@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
-
+use App\Models\Order;
 
 class UserController extends Controller
 {
@@ -13,31 +13,54 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    return view('home.user.index');
-}
+    {
+        return view('home.user.index');
+    }
 
-public function reviews()
-{
-    $comments = Comment::where(
-        'user_id',
-        Auth::id()
-    )->get();
+    public function reviews()
+    {
+        $comments = Comment::where(
+            'user_id',
+            Auth::id()
+        )->get();
 
-    return view(
-        'home.user.comments',
-        compact('comments')
-    );
-}
+        return view(
+            'home.user.comments',
+            compact('comments')
+        );
+    }
 
-public function reviewdestroy($id)
-{
-    $data = Comment::find($id);
+    public function orders()
+    {
+        $orders = Order::where(
+            'user_id',
+            Auth::id()
+        )->get();
 
-    $data->delete();
+        return view(
+            'home.user.orders',
+            compact('orders')
+        );
+    }
+    public function orderdetail($id)
+    {
+        $order = Order::with(
+            'orderProducts.product'
+        )->find($id);
 
-    return redirect()->route('userpanel.reviews');
-}
+        return view(
+            'home.user.orderdetail',
+            compact('order')
+        );
+    }
+    public function reviewdestroy($id)
+    {
+        $data = Comment::find($id);
+
+        $data->delete();
+
+        return redirect()->route('userpanel.reviews');
+    }
 
 
 

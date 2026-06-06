@@ -1095,3 +1095,19 @@ body {
     font-weight: 700;
     color: #16a34a;
 }
+
+.input-box {
+    position: relative;
+}
+
+.input-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.input-box input {
+    padding-left: 45px;
+}
